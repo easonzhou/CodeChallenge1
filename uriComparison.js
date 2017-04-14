@@ -6,26 +6,27 @@ var uriComparison = (function() {
         uriArray1 = reducePath(uriArray1);
         uriArray2 = reducePath(uriArray2);
 
-        if ( uriArray1.length !== uriArray2.length ) { console.log("The two urls don't have the same lengths of paths");
+        if ( uriArray1.length !== uriArray2.length ) { 
+            //console.log("The two urls don't have the same lengths of paths");
             return false;
         }
 
         // compare scheme
         if ( uriArray1[0].toLowerCase() !== uriArray2[0].toLowerCase() ) {
-            console.log("scheme is not equal");
+            //console.log("scheme is not equal");
             return false;
         }
 
         var result = compareBasicAuthHostPort( uriArray1[1], uriArray2[1] );
         if ( result !== true ) {
-            console.log(result);
+            //console.log(result);
             return false;
         }
 
         // compare each path 
         for ( var i = 2; i < uriArray1.length - 1; i++ ) {
             if (!checkPathEquality(uriArray1[i], uriArray2[i])) {
-                console.log("The path of first uri doesn't match the path of the second uri");
+                //console.log("The path of first uri doesn't match the path of the second uri");
                 return false;
             }
         }
@@ -38,14 +39,14 @@ var uriComparison = (function() {
         var str2 = path2.split('?');
 
         if ( str1[0] !== str2[0] ) {
-            console.log("Filename doesn't match");
+            //console.log("Filename doesn't match");
             return false;
         }
 
         if ( str1[1] === undefined && str2[1] === undefined )
             return true;
         else if ( str1[1] === 'undefined' || str2[1] === 'undefined' ) {
-            console.log("one path has query strings while the other has no query strings");
+            //console.log("one path has query strings while the other has no query strings");
             return false;
         }
 
@@ -55,7 +56,7 @@ var uriComparison = (function() {
         var params2KeyVal = {};
 
         if ( params1.length !== params2.length ) {
-            console.log("The number of params of two urls don't match");
+            //console.log("The number of params of two urls don't match");
             return false;
         }
 
@@ -125,21 +126,21 @@ var uriComparison = (function() {
         var userAuth1 = str1.split('@');
         var userAuth2 = str2.split('@');
         if ( userAuth1.length !== userAuth2.length ) {
-            console.log("one uri has basic auth but the other doesn't have");
+            //console.log("one uri has basic auth but the other doesn't have");
             return false;
         }
 
         if ( userAuth1.length === 2 && userAuth2.length === 2 ) {
             if ( userAuth1[0] !== userAuth2[0] ) {
-                console.log("basic authentication is not the same ");
+                //console.log("basic authentication is not the same ");
                 return false;
             }
             if ( reducePort(userAuth1[1]).toLowerCase() !== reducePort(userAuth2[1]).toLowerCase() ) {
-                console.log("host name and port is not equal");
+                //console.log("host name and port is not equal");
                 return false;
             }
         } else if ( reducePort(userAuth1[0]).toLowerCase() !== reducePort(userAuth2[0]).toLowerCase() ) {
-            console.log("host name and port is not equal");
+            //console.log("host name and port is not equal");
             return false;
         }
 
@@ -194,6 +195,8 @@ var uriComparison = (function() {
 
 console.log(uriComparison.uriComparison('http://abc.com:80/~smith/home.html', 'http://ABC.com/%7Esmith/home.html'));
 console.log(uriComparison.uriComparison('http://abc.com/drill/down/foo.html', 'http://abc.com/drill/further/../down/./foo.html'));
+console.log(uriComparison.uriComparison('http://abc.com/drill/down/foo.html', 'http://abc.com/drill/further/../../drill/down/./foo.html'));
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=1&b=2', 'http://abc.com/foo.html?b=2&a=1'));
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=1&b=2&a=3', 'http://abc.com/foo.html?a=3&a=1&b=2'));
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=3&b=2&a=1', 'http://abc.com/foo.html?a=3&a=1&b=2'));
+console.log(uriComparison.uriComparison('https://abc.com/foo.html?a=3&b=2&a=1', 'http://abc.com/foo.html?a=3&a=1&b=2'));
