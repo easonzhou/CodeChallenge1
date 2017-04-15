@@ -6,25 +6,23 @@ var uriComparison = (function() {
         uriArray1 = reducePath(uriArray1);
         uriArray2 = reducePath(uriArray2);
 
-        if ( uriArray1.length !== uriArray2.length ) { 
+        if (uriArray1.length !== uriArray2.length) { 
             //console.log("The two urls don't have the same lengths of paths");
             return false;
         }
 
         // compare scheme
-        if ( uriArray1[0].toLowerCase() !== uriArray2[0].toLowerCase() ) {
+        if (uriArray1[0].toLowerCase() !== uriArray2[0].toLowerCase()) {
             //console.log("scheme is not equal");
             return false;
         }
 
-        var result = compareBasicAuthHostPort( uriArray1[1], uriArray2[1] );
-        if ( result !== true ) {
-            //console.log(result);
+        if (!compareBasicAuthHostPort( uriArray1[1], uriArray2[1])) {
             return false;
         }
 
         // compare each path 
-        for ( var i = 2; i < uriArray1.length - 1; i++ ) {
+        for (var i = 2; i < uriArray1.length - 1; i++) {
             if (!checkPathEquality(uriArray1[i], uriArray2[i])) {
                 //console.log("The path of first uri doesn't match the path of the second uri");
                 return false;
@@ -38,14 +36,14 @@ var uriComparison = (function() {
         var str1 = path1.split('?');
         var str2 = path2.split('?');
 
-        if ( str1[0] !== str2[0] ) {
+        if (str1[0] !== str2[0]) {
             //console.log("Filename doesn't match");
             return false;
         }
 
-        if ( str1[1] === undefined && str2[1] === undefined )
+        if (str1[1] === undefined && str2[1] === undefined)
             return true;
-        else if ( str1[1] === 'undefined' || str2[1] === 'undefined' ) {
+        else if (str1[1] === 'undefined' || str2[1] === 'undefined') {
             //console.log("one path has query strings while the other has no query strings");
             return false;
         }
@@ -55,20 +53,20 @@ var uriComparison = (function() {
         var params1KeyVal = {};
         var params2KeyVal = {};
 
-        if ( params1.length !== params2.length ) {
+        if (params1.length !== params2.length) {
             //console.log("The number of params of two urls don't match");
             return false;
         }
 
-        for ( var i = 0; i < params1.length; i++ ) {
+        for (var i = 0; i < params1.length; i++) {
             var first = params1[i].split('=');
             var second = params2[i].split('=');
-            if ( params1KeyVal[first[0]] === undefined )
+            if (params1KeyVal[first[0]] === undefined)
                 params1KeyVal[first[0]] = [first[1]];
             else 
                 params1KeyVal[first[0]].push(first[1]);
 
-            if ( params2KeyVal[second[0]] === undefined )
+            if (params2KeyVal[second[0]] === undefined)
                 params2KeyVal[second[0]] = [second[1]];
             else 
                 params2KeyVal[second[0]].push(second[1]);
@@ -87,14 +85,14 @@ var uriComparison = (function() {
             var array = map1[key];
             var testArray = map2[key];
 
-            if ( testArray === undefined ) {
+            if (testArray === undefined) {
                 return false;
             } else {
-                if ( array.length !== testArray.length )
+                if (array.length !== testArray.length)
                     return false;
 
-                for ( var i = 0; i < array.length; i++ ) {
-                    if ( array[i] !== testArray[i] )
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i] !== testArray[i])
                         return false;
                 }
             }
@@ -108,15 +106,15 @@ var uriComparison = (function() {
         function convertHex2String(e) {
             e = e.slice(1);
             var reserved = ["2C", "2F", "3F", "3A", "40", "26", "3D", "2B", "24", "23"];
-            if ( reserved.indexOf(e) === -1 )
+            if (reserved.indexOf(e) === -1)
                 return hex2a(e);
             else
-                return "%" + e; // Question: whether two reserved characters are the same in both paths
+                return "%" + e; 
         }
         path1 = path1.replace(rx, convertHex2String);
         path2 = path2.replace(rx, convertHex2String);
 
-        if ( path1 === path2 )
+        if (path1 === path2)
             return true;
 
         return false;
@@ -125,21 +123,21 @@ var uriComparison = (function() {
     var compareBasicAuthHostPort = function(str1, str2) {
         var userAuth1 = str1.split('@');
         var userAuth2 = str2.split('@');
-        if ( userAuth1.length !== userAuth2.length ) {
+        if (userAuth1.length !== userAuth2.length) {
             //console.log("one uri has basic auth but the other doesn't have");
             return false;
         }
 
-        if ( userAuth1.length === 2 && userAuth2.length === 2 ) {
-            if ( userAuth1[0] !== userAuth2[0] ) {
+        if (userAuth1.length === 2 && userAuth2.length === 2) {
+            if (userAuth1[0] !== userAuth2[0]) {
                 //console.log("basic authentication is not the same ");
                 return false;
             }
-            if ( reducePort(userAuth1[1]).toLowerCase() !== reducePort(userAuth2[1]).toLowerCase() ) {
+            if (reducePort(userAuth1[1]).toLowerCase() !== reducePort(userAuth2[1]).toLowerCase()) {
                 //console.log("host name and port is not equal");
                 return false;
             }
-        } else if ( reducePort(userAuth1[0]).toLowerCase() !== reducePort(userAuth2[0]).toLowerCase() ) {
+        } else if (reducePort(userAuth1[0]).toLowerCase() !== reducePort(userAuth2[0]).toLowerCase()) {
             //console.log("host name and port is not equal");
             return false;
         }
@@ -149,10 +147,10 @@ var uriComparison = (function() {
 
     var reducePath = function(uriArray) {
         var result = [];
-        for ( var i = 0; i < uriArray.length; i++ ) {
-            if ( uriArray[i] === '..'  ) {
+        for (var i = 0; i < uriArray.length; i++) {
+            if (uriArray[i] === '..') {
                 result.pop();
-            } else if ( uriArray[i] === '.' || uriArray[i] === "" ) {
+            } else if (uriArray[i] === '.' || uriArray[i] === "") {
                 continue;
             } else {
                 result.push(uriArray[i]);
@@ -163,7 +161,7 @@ var uriComparison = (function() {
 
     var reducePort = function(hostPort) {
         var strArray = hostPort.split(':');
-        if ( strArray.length === 2 && strArray[1] === '80' )
+        if (strArray.length === 2 && strArray[1] === '80')
             return strArray[0];
         return hostPort;
     };
