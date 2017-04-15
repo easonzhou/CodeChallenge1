@@ -1,7 +1,8 @@
 var compress = (function() {
     "use strict";
 
-    var compressString = function (str) {
+    var compressString = function (str) { 
+        console.log("Input: ", str)
         if ( str === undefined || str.length === 0 )
             return '';
 
@@ -32,9 +33,14 @@ var compress = (function() {
     };
 })();
 
-console.log(compress.compressString('aaaabbaaaababbbcccccccccccc'));
-console.log(compress.compressString('aaaaaaaaaaaaalllllllldddfffeeeeeeeebbbbbbbbeggggggggabbaaaababbbccccccccccccccccccccccccccc'));
-console.log(compress.compressString('a'));
-console.log(compress.compressString('abc'));
-console.log(compress.compressString());
-console.log(compress.compressString(''));
+console.log("Return: ", compress.compressString('aaaabbaaaababbbcccccccccccc'));
+console.log('\n')
+console.log("Return: ", compress.compressString('aaaaaaaaaaaaalllllllldddfffeeeeeeeebbbbbbbbeggggggggabbaaaababbbccccccccccccccccccccccccccc'));
+console.log('\n')
+console.log("Return: ", compress.compressString('a'));
+console.log('\n')
+console.log("Return: ", compress.compressString('abc'));
+console.log('\n')
+console.log("Return: ", compress.compressString());
+console.log('\n')
+console.log("Return: ", compress.compressString(''));

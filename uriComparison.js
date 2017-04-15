@@ -1,6 +1,8 @@
 var uriComparison = (function() {
     "use strict";
     var uriComparison = function(uri1, uri2) {
+        console.log(uri1);
+        console.log(uri2);
         var uriArray1 = uri1.split('/');
         var uriArray2 = uri2.split('/');
         uriArray1 = reducePath(uriArray1);
@@ -192,9 +194,15 @@ var uriComparison = (function() {
 //console.log(uriComparison.compareBasicAuthHostPort("admin:password@abc.com","admin:password@abc.com"));
 
 console.log(uriComparison.uriComparison('http://abc.com:80/~smith/home.html', 'http://ABC.com/%7Esmith/home.html'));
+console.log('\n')
 console.log(uriComparison.uriComparison('http://abc.com/drill/down/foo.html', 'http://abc.com/drill/further/../down/./foo.html'));
+console.log('\n')
 console.log(uriComparison.uriComparison('http://abc.com/drill/down/foo.html', 'http://abc.com/drill/further/../../drill/down/./foo.html'));
+console.log('\n')
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=1&b=2', 'http://abc.com/foo.html?b=2&a=1'));
+console.log('\n')
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=1&b=2&a=3', 'http://abc.com/foo.html?a=3&a=1&b=2'));
+console.log('\n')
 console.log(uriComparison.uriComparison('http://abc.com/foo.html?a=3&b=2&a=1', 'http://abc.com/foo.html?a=3&a=1&b=2'));
+console.log('\n')
 console.log(uriComparison.uriComparison('https://abc.com/foo.html?a=3&b=2&a=1', 'http://abc.com/foo.html?a=3&a=1&b=2'));
