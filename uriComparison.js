@@ -107,7 +107,7 @@ var uriComparison = (function() {
         var rx = /%../g;
         function convertHex2String(e) {
             e = e.slice(1);
-            var reserved = ["2C", "2F", "3F", "3A", "40", "26", "3D", "2B", "24", "23"];
+            var reserved = ["2C", "2c", "2F", "2f", "3F", "3f", "3A", "3a", "40", "26", "3D", "3d", "2B", "2b", "24", "23"];
             if (reserved.indexOf(e) === -1)
                 return hex2a(e);
             else
